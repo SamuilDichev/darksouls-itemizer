@@ -30,7 +30,7 @@ class Itemizer():
 		items = list(self.items_by_type.values())
 		cartesian_product = itertools.product(*items)
 
-		with open('{}.csv'.format(output_file_name), 'w') as f:
+		with open(output_file_name, 'w') as f:
 			writer = csv.DictWriter(f, items[0][0].keys())
 			writer.writeheader()
 
@@ -45,3 +45,10 @@ class Itemizer():
 						else:
 							item_set[stat_name] = float(item_set[stat_name]) + float(value)
 				writer.writerow(item_set)
+
+	def find_item_set(self, sets_file_name):
+		with open(sets_file_name, 'r') as f:
+			reader = csv.DictReader(f)
+			for row in reader:
+				if float(row['Poise']) >= 53 and float(row['Weight']) <= 22:
+					print(row)
